@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <div class="container">
+      <a class="navbar-brand" href="/">Libretro Database</a>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1 class="py-4">{{.System}}</h1>
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{.System}}</li>
+      </ol>
+    </nav>
+
+    <div class="row">
+      {{range .Games}}
+      <div class="col-sm-3 mb-3">
+        <div class="card shadow-sm">
+          <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name}}.png" class="card-img-top" alt="Game screenshot">
+          <div class="card-body">
+            <h5 class="card-title">{{.Name}}</h5>
+            <p class="card-text">{{.Genre}}</p>
+            <p class="card-text">{{.Developer}}</p>
+            <p class="card-text">{{.Publisher}}</p>
+            <a href="{{.Name}}.html" class="btn btn-primary stretched-link">See details</a>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    </div>
+
+  </div>  
+
+</body>
+</html>

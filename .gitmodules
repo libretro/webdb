@@ -1,0 +1,3 @@
+[submodule "database"]
+	path = database
+	url = https://github.com/kivutar/ludo-database.git
