@@ -15,6 +15,7 @@ import (
 )
 
 var target = "build"
+var tmpl *template.Template
 
 // Scrub characters that are not cross-platform and/or violate the
 // No-Intro filename standard.
@@ -33,7 +34,7 @@ func scrubIllegalChars(str string) string {
 	return str
 }
 
-func LoadDB(dir string) (rdb.DB, error) {
+func loadDB(dir string) (rdb.DB, error) {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
 		return rdb.DB{}, err
@@ -51,55 +52,62 @@ func LoadDB(dir string) (rdb.DB, error) {
 	return db, nil
 }
 
-func build() {
-	tmpl := template.Must(template.ParseGlob("templates/*"))
+func buildSystem(system string, games rdb.RDB) {
+	os.MkdirAll(filepath.Join(target, system), os.ModePerm)
 
-	db, err := LoadDB("./database")
+	f, err := os.OpenFile(filepath.Join(target, system, "index.html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	tmpl.ExecuteTemplate(f, "system.html", struct {
+		System string
+		Games  rdb.RDB
+	}{
+		system,
+		games,
+	})
+}
+
+func buildGame(system string, game rdb.Game) {
+	cleanName := scrubIllegalChars(game.Name)
+	path := filepath.Join(target, system, cleanName+".html")
+
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	tmpl.ExecuteTemplate(f, "game.html", struct {
+		System    string
+		Game      rdb.Game
+		CleanName string
+	}{
+		system,
+		game,
+		cleanName,
+	})
+}
+
+func build() {
+	tmpl = template.Must(template.ParseGlob("templates/*"))
+
+	db, err := loadDB("./database")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	wg := sync.WaitGroup{}
 	for system, games := range db {
-		os.MkdirAll(filepath.Join(target, system), os.ModePerm)
-
-		f, err := os.OpenFile(filepath.Join(target, system, "index.html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
-		if err != nil {
-			log.Fatal(err)
-		}
-		tmpl.ExecuteTemplate(f, "system.html", struct {
-			System string
-			Games  rdb.RDB
-		}{
-			system,
-			games,
-		})
-		f.Close()
-
-		wg.Add(1)
+		buildSystem(system, games)
 		system := system
 		games := games
+		wg.Add(1)
 		go func() {
 			for _, game := range games {
-				cleanName := scrubIllegalChars(game.Name)
-				path := filepath.Join(target, system, cleanName+".html")
-
-				f2, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
-				if err != nil {
-					log.Fatal(err)
-				}
-
-				tmpl.ExecuteTemplate(f2, "game.html", struct {
-					System    string
-					Game      rdb.Game
-					CleanName string
-				}{
-					system,
-					game,
-					cleanName,
-				})
-
-				f2.Close()
+				buildGame(system, game)
 			}
 			wg.Done()
 		}()
