@@ -6,6 +6,8 @@ github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0/go.mod h1:E/TSTwGw
 github.com/kivutar/glfont v0.0.0-20190119064645-3f4c07235fb3/go.mod h1:yvRxgIrpErStul4gzj88N+5yL15ze5JUVqk6Ze4mU+I=
 github.com/libretro/ludo v0.5.2 h1:cPFIl4mrlskiWMYLcGT/e0btFsZX5DWUlipx0sbj678=
 github.com/libretro/ludo v0.5.2/go.mod h1:VzVK8b71TYyUHQc5UQJj9ULC06O6HPCQD+QOe4YhqAU=
+github.com/libretro/ludo v0.5.4-0.20190304150752-d547d4a5b25f h1:gcvXAXmCm90feQLn73EOhLmzHFjnaksbVJiPo06oywM=
+github.com/libretro/ludo v0.5.4-0.20190304150752-d547d4a5b25f/go.mod h1:VzVK8b71TYyUHQc5UQJj9ULC06O6HPCQD+QOe4YhqAU=
 github.com/lucasb-eyer/go-colorful v0.0.0-20181028223441-12d3b2882a08/go.mod h1:NXg0ArsFk0Y01623LgUqoqcouGDB+PwCCQlrwrG6xJ4=
 github.com/rs/xid v1.2.1/go.mod h1:+uKXf+4Djp6Md1KODXJxgGQPKngRmWyn10oCKFzNHOQ=
 github.com/tanema/gween v0.0.0-20171018143308-f05d97ee644d/go.mod h1:q58RIyFkCWKEi86xWwyOYLA9YZCY6myIgdN1Os5HECU=
