@@ -52,6 +52,22 @@ func loadDB(dir string) (rdb.DB, error) {
 	return db, nil
 }
 
+func buildHome(db rdb.DB) {
+	os.MkdirAll(target, os.ModePerm)
+
+	f, err := os.OpenFile(filepath.Join(target, "index.html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	tmpl.ExecuteTemplate(f, "home.html", struct {
+		DB rdb.DB
+	}{
+		db,
+	})
+}
+
 func buildSystem(system string, games rdb.RDB) {
 	os.MkdirAll(filepath.Join(target, system), os.ModePerm)
 
@@ -91,13 +107,23 @@ func buildGame(system string, game rdb.Game) {
 	})
 }
 
+var funcMap = template.FuncMap{
+	"N": func(n int) []struct{} {
+		return make([]struct{}, n)
+	},
+}
+
 func build() {
-	tmpl = template.Must(template.ParseGlob("templates/*"))
+	tmpl = template.Must(
+		template.New("main").Funcs(funcMap).ParseGlob("templates/*.html"),
+	)
 
 	db, err := loadDB("./database")
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	buildHome(db)
 
 	wg := sync.WaitGroup{}
 	for system, games := range db {

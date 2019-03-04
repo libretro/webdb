@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <h1 class="py-4">Libretro Database</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+      </ol>
+    </nav>
+    {{range $system, $games := .DB}}
+      <h2>{{$system}}</h2>
+      <div class="row">
+      {{range $i, $_ := N 4}}
+        {{ with (index $games $i) }}
+        <div class="col-sm-3 mb-3">
+          <div class="card shadow-sm">
+            <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name}}.png" class="card-img-top" alt="Game screenshot">
+            <div class="card-body">
+              <h6 class="card-title">{{.Name}}</h6>
+              <a href="/{{$system}}/{{.Name}}.html" class="btn btn-primary stretched-link">See details</a>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      {{end}}
+      </div>
+      <p><a href="/{{$system}}/" class="btn btn-primary">See more</a></p>
+    {{end}}
+  </div>
+</body>
+</html>
