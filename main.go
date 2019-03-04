@@ -88,8 +88,7 @@ func buildSystem(system string, games rdb.RDB) {
 }
 
 func buildGame(system string, game rdb.Game) {
-	cleanName := scrubIllegalChars(game.Name)
-	path := filepath.Join(target, system, cleanName+".html")
+	path := filepath.Join(target, system, scrubIllegalChars(game.Name)+".html")
 
 	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
@@ -98,13 +97,11 @@ func buildGame(system string, game rdb.Game) {
 	defer f.Close()
 
 	tmpl.ExecuteTemplate(f, "game.html", struct {
-		System    string
-		Game      rdb.Game
-		CleanName string
+		System string
+		Game   rdb.Game
 	}{
 		system,
 		game,
-		cleanName,
 	})
 }
 
@@ -112,6 +109,7 @@ var funcMap = template.FuncMap{
 	"N": func(n int) []struct{} {
 		return make([]struct{}, n)
 	},
+	"Clean": scrubIllegalChars,
 }
 
 func build() {

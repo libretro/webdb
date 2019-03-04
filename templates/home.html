@@ -13,7 +13,7 @@
         {{ with (index $games $i) }}
 
           <div class="card shadow-sm">
-            <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name}}.png" class="card-img-top" onerror="this.src='/img-broken.png'">
+            <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" onerror="this.src='/img-broken.png'">
             <div class="card-body">
               <h6 class="card-title">{{.Name}}</h6>
             </div>
