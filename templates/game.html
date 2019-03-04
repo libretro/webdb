@@ -19,6 +19,12 @@
         <li class="breadcrumb-item active" aria-current="page">{{.Game.Name}}</li>
       </ol>
     </nav>
+    <p>{{.Game.Description}}</p>
+    <p><strong>Genre:</strong> {{.Game.Genre}}</p>
+    <p><strong>Developer:</strong> {{.Game.Developer}}</p>
+    <p><strong>Publisher:</strong> {{.Game.Publisher}}</p>
+    <p><strong>Franchise:</strong> {{.Game.Franchise}}</p>
+    <p><strong>Serial:</strong> {{.Game.Serial}}</p>
     <p><strong>Size:</strong> {{.Game.Size}}</p>
     <p><strong>CRC32:</strong> {{.Game.CRC32}}</p>
     <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></p>
