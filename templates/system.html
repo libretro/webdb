@@ -19,7 +19,7 @@
       {{range .Games}}
       <div class="col-sm-3 mb-3">
         <div class="card shadow-sm">
-          <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name}}.png" class="card-img-top" alt="Game screenshot">
+          <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name}}.png" class="card-img-top" alt="Game screenshot" onerror="this.src='/img-broken.png'">
           <div class="card-body">
             <h5 class="card-title">{{.Name}}</h5>
             <p class="card-text">{{.Genre}}</p>

@@ -16,9 +16,9 @@
     </nav>
     <p><strong>Size:</strong> {{.Game.Size}}</p>
     <p><strong>CRC32:</strong> {{.Game.CRC32}}</p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.CleanName}}.png"></p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.CleanName}}.png"></p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.CleanName}}.png"></p>
+    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.CleanName}}.png" onerror="this.src='/img-broken.png'"></p>
+    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.CleanName}}.png" onerror="this.src='/img-broken.png'"></p>
+    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.CleanName}}.png" onerror="this.src='/img-broken.png'"></p>
   </div>
 </body>
 </html>
