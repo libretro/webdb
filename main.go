@@ -113,9 +113,17 @@ func buildGame(system string, game rdb.Game) {
 	})
 }
 
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
 var funcMap = template.FuncMap{
 	"mkslice": func(a []rdb.Game, start, end int) []rdb.Game {
-		return a[start:end]
+		e := min(end, len(a))
+		return a[start:e]
 	},
 	"Clean": scrubIllegalChars,
 	"Tags": func(name string) []string {
