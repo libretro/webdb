@@ -9,10 +9,7 @@
     {{range $system, $games := .DB}}
       <h2 class="pt-5 pb-2">{{$system}}</h2>
       <div class="card-deck mb-3">
-      {{range $i, $_ := N 4}}
-        {{with (index $games $i)}}
-
-
+        {{range mkslice $games 0 5}}
           <div class="card shadow-sm">
             <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" onerror="this.src='/img-broken.png'">
             <div class="card-body">
@@ -27,9 +24,7 @@
               <a href="/{{$system}}/{{.Name}}.html" class="float-right stretched-link">See details</a>
             </div>
           </div>
-
         {{end}}
-      {{end}}
       </div>
       <p><a href="/{{$system}}/" class="btn btn-block btn-primary">Browse the game collection</a></p>
     {{end}}

@@ -114,8 +114,8 @@ func buildGame(system string, game rdb.Game) {
 }
 
 var funcMap = template.FuncMap{
-	"N": func(n int) []struct{} {
-		return make([]struct{}, n)
+	"mkslice": func(a []rdb.Game, start, end int) []rdb.Game {
+		return a[start:end]
 	},
 	"Clean": scrubIllegalChars,
 	"Tags": func(name string) []string {
