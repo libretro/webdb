@@ -4,20 +4,9 @@
   {{template "head"}}
 </head>
 <body>
-  
-  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-    <div class="container">
-      <a class="navbar-brand" href="/">Libretro Database</a>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-  </nav>
-  
+  {{template "navbar"}}
   <div class="container">
     <h1 class="py-4">{{.Game.Name}}</h1>
-    
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -25,15 +14,11 @@
         <li class="breadcrumb-item active" aria-current="page">{{.Game.Name}}</li>
       </ol>
     </nav>
-    
     <p><strong>Size:</strong> {{.Game.Size}}</p>
     <p><strong>CRC32:</strong> {{.Game.CRC32}}</p>
-    
     <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.CleanName}}.png"></p>
     <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.CleanName}}.png"></p>
     <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.CleanName}}.png"></p>
-    
   </div>
-
 </body>
 </html>

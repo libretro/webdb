@@ -1,8 +1,10 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -49,7 +51,7 @@ func LoadDB(dir string) (rdb.DB, error) {
 	return db, nil
 }
 
-func main() {
+func build() {
 	tmpl := template.Must(template.ParseGlob("templates/*"))
 
 	db, err := LoadDB("./database")
@@ -103,4 +105,25 @@ func main() {
 		}()
 	}
 	wg.Wait()
+}
+
+func serve() {
+	fs := http.FileServer(http.Dir(target))
+	http.Handle("/", fs)
+
+	log.Println("Listening on http://0.0.0.0:3003")
+	http.ListenAndServe(":3003", nil)
+}
+
+func main() {
+	flag.Parse()
+	args := flag.Args()
+	switch args[0] {
+	case "serve":
+		serve()
+	case "build":
+		fallthrough
+	default:
+		build()
+	}
 }
