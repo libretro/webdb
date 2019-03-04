@@ -35,6 +35,13 @@ func scrubIllegalChars(str string) string {
 	return str
 }
 
+func reverse(s rdb.RDB) rdb.RDB {
+	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
+		s[i], s[j] = s[j], s[i]
+	}
+	return s
+}
+
 func loadDB(dir string) (rdb.DB, error) {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -48,7 +55,7 @@ func loadDB(dir string) (rdb.DB, error) {
 		}
 		system := name[0 : len(name)-4]
 		bytes, _ := ioutil.ReadFile(filepath.Join(dir, name))
-		db[system] = rdb.Parse(bytes)
+		db[system] = reverse(rdb.Parse(bytes))
 	}
 	return db, nil
 }
