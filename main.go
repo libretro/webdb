@@ -54,6 +54,7 @@ func loadDB(dir string) (rdb.DB, error) {
 
 func buildHome(db rdb.DB) {
 	os.MkdirAll(target, os.ModePerm)
+	os.Link("img-broken.png", filepath.Join(target, "img-broken.png"))
 
 	f, err := os.OpenFile(filepath.Join(target, "index.html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
