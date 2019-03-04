@@ -6,7 +6,12 @@
 <body>
   {{template "navbar"}}
   <div class="container">
-    <h1 class="py-4">{{.Game.Name}}</h1>
+    <h1 class="py-4">
+      {{.Game.Name | WithoutTags}}
+      {{range $_, $tag := (Tags .Game.Name) }}
+        <span class="badge badge-secondary">{{$tag}}</span>
+      {{end}}
+    </h1>
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>

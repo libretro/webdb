@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"sync"
 	"text/template"
@@ -110,6 +111,31 @@ var funcMap = template.FuncMap{
 		return make([]struct{}, n)
 	},
 	"Clean": scrubIllegalChars,
+	"Tags": func(name string) []string {
+		_, tags := extractTags(name)
+		return tags
+	},
+	"WithoutTags": func(name string) string {
+		sname, _ := extractTags(name)
+		return sname
+	},
+}
+
+func extractTags(name string) (string, []string) {
+	re := regexp.MustCompile(`\(.*?\)`)
+	pars := re.FindAllString(name, -1)
+	var tags []string
+	for _, par := range pars {
+		name = strings.Replace(name, par, "", -1)
+		par = strings.Replace(par, "(", "", -1)
+		par = strings.Replace(par, ")", "", -1)
+		results := strings.Split(par, ",")
+		for _, result := range results {
+			tags = append(tags, strings.TrimSpace(result))
+		}
+	}
+	name = strings.TrimSpace(name)
+	return name, tags
 }
 
 func build() {

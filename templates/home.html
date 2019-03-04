@@ -10,12 +10,18 @@
       <h2 class="pt-5 pb-2">{{$system}}</h2>
       <div class="card-deck mb-3">
       {{range $i, $_ := N 4}}
-        {{ with (index $games $i) }}
+        {{with (index $games $i)}}
+
 
           <div class="card shadow-sm">
             <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" onerror="this.src='/img-broken.png'">
             <div class="card-body">
-              <h6 class="card-title">{{.Name}}</h6>
+              <h6 class="card-title">
+                {{.Name | WithoutTags}}
+                {{range $_, $tag := (Tags .Name) }}
+                  <span class="badge badge-secondary">{{$tag}}</span>
+                {{end}}
+              </h6>
             </div>
             <div class="card-footer">
               <a href="/{{$system}}/{{.Name}}.html" class="float-right stretched-link">See details</a>

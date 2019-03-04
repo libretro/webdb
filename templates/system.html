@@ -21,11 +21,16 @@
         <div class="card shadow-sm">
           <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" alt="Game screenshot" onerror="this.src='/img-broken.png'">
           <div class="card-body">
-            <h5 class="card-title">{{.Name}}</h5>
+            <h6 class="card-title">
+              {{.Name | WithoutTags}}
+              {{range $_, $tag := (Tags .Name) }}
+                <span class="badge badge-secondary">{{$tag}}</span>
+              {{end}}
+            </h6>
             <p class="card-text">{{.Genre}}</p>
-            <p class="card-text">{{.Developer}}</p>
-            <p class="card-text">{{.Publisher}}</p>
-            <a href="{{.Name | Clean}}.html" class="btn btn-primary stretched-link">See details</a>
+          </div>
+          <div class="card-footer">
+            <a href="{{.Name | Clean}}.html" class="float-right stretched-link">See details</a>
           </div>
         </div>
       </div>
