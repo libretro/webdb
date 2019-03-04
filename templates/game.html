@@ -19,17 +19,29 @@
         <li class="breadcrumb-item active" aria-current="page">{{.Game.Name}}</li>
       </ol>
     </nav>
-    <p>{{.Game.Description}}</p>
-    <p><strong>Genre:</strong> {{.Game.Genre}}</p>
-    <p><strong>Developer:</strong> {{.Game.Developer}}</p>
-    <p><strong>Publisher:</strong> {{.Game.Publisher}}</p>
-    <p><strong>Franchise:</strong> {{.Game.Franchise}}</p>
-    <p><strong>Serial:</strong> {{.Game.Serial}}</p>
-    <p><strong>Size:</strong> {{.Game.Size}}</p>
-    <p><strong>CRC32:</strong> {{.Game.CRC32}}</p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></p>
-    <p><img src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></p>
+    <div class="row">
+      <div class="col-sm">
+        <p>{{.Game.Description}}</p>
+        <table class="table table-sm table-striped">
+          <tbody>
+            <tr><th scope="row" style="width: 20%">Genre:</th><td>{{.Game.Genre}}</td></tr>
+            <tr><th scope="row">Developer:</th><td>{{.Game.Developer}}</td></tr>
+            <tr><th scope="row">Publisher:</th><td>{{.Game.Publisher}}</td></tr>
+            <tr><th scope="row">Franchise:</th><td>{{.Game.Franchise}}</td></tr>
+            <tr><th scope="row">Serial:</th><td>{{.Game.Serial}}</td></tr>
+            <tr><th scope="row">Size:</th><td>{{.Game.Size}}</td></tr>
+            <tr><th scope="row">CRC32:</th><td>{{.Game.CRC32}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm">
+        <div class="row">
+          <div class="col-12 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+          <div class="col-6 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+          <div class="col-6 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>
