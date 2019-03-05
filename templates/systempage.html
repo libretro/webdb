@@ -17,11 +17,11 @@
 
     <div class="row">
       {{range .Games}}
-      <div class="col-sm-3 mb-3">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
         <div class="card shadow-sm">
           <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" alt="Game screenshot" onerror="this.src='/img-broken.png'">
           <div class="card-body">
-            <h6 class="card-title">
+            <h6 class="card-title mb-0">
               {{.Name | WithoutTags}}
               {{range $_, $tag := (Tags .Name) }}
                 <span class="badge badge-secondary">{{$tag}}</span>

@@ -18,7 +18,7 @@ import (
 )
 
 var target = "build"
-var perPage = 20
+var perPage = 24
 var tmpl *template.Template
 
 // Scrub characters that are not cross-platform and/or violate the
