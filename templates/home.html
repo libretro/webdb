@@ -8,12 +8,13 @@
   <div class="container">
     {{range $system, $games := .DB}}
       <h2 class="pt-5 pb-2">{{$system}} <span class="text-secondary">({{len $games}} games)</span></h2>
-      <div class="card-deck mb-3">
-        {{range mkslice $games 0 5}}
+      <div class="row">
+        {{range mkslice $games 0 4}}
+        <div class="col-md-3 col-sm-6 col-xs-12 mb-3">
           <div class="card shadow-sm">
             <img src="http://thumbnails.libretro.com/{{$system}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" onerror="this.src='/img-broken.png'">
             <div class="card-body">
-              <h6 class="card-title">
+              <h6 class="card-title mb-0">
                 {{.Name | WithoutTags}}
                 {{range $_, $tag := (Tags .Name) }}
                   <span class="badge badge-secondary">{{$tag}}</span>
@@ -24,6 +25,7 @@
               <a href="/{{$system}}/{{.Name | Clean}}.html" class="float-right stretched-link">See details</a>
             </div>
           </div>
+        </div>
         {{end}}
       </div>
       <p><a href="/{{$system}}/index-0.html" class="btn btn-block btn-primary">Browse the game collection</a></p>
