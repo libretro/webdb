@@ -7,7 +7,7 @@
   {{template "navbar"}}
   <div class="container">
     {{range $system, $games := .DB}}
-      <h2 class="pt-5 pb-2">{{$system}}</h2>
+      <h2 class="pt-5 pb-2">{{$system}} <span class="text-secondary">({{len $games}} games)</span></h2>
       <div class="card-deck mb-3">
         {{range mkslice $games 0 5}}
           <div class="card shadow-sm">
