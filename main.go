@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -77,22 +79,29 @@ func buildHome(db rdb.DB) {
 	})
 }
 
-func buildSystem(system string, games rdb.RDB) {
+func buildSystemPages(system string, games rdb.RDB) {
 	os.MkdirAll(filepath.Join(target, system), os.ModePerm)
+	numPages := int(math.Ceil(float64(len(games)) / 20.0))
+	for p := 0; p < numPages; p++ {
+		page := fmt.Sprintf("%d", p)
+		f, err := os.OpenFile(filepath.Join(target, system, "index-"+page+".html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer f.Close()
 
-	f, err := os.OpenFile(filepath.Join(target, system, "index.html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
-	if err != nil {
-		log.Fatal(err)
+		tmpl.ExecuteTemplate(f, "systempage.html", struct {
+			System   string
+			Games    rdb.RDB
+			Page     int
+			LastPage int
+		}{
+			system,
+			games[p*20 : min(p*20+20, len(games))],
+			p,
+			numPages - 1,
+		})
 	}
-	defer f.Close()
-
-	tmpl.ExecuteTemplate(f, "system.html", struct {
-		System string
-		Games  rdb.RDB
-	}{
-		system,
-		games,
-	})
 }
 
 func buildGame(system string, game rdb.Game) {
@@ -134,6 +143,9 @@ var funcMap = template.FuncMap{
 		sname, _ := extractTags(name)
 		return sname
 	},
+	"add": func(a, b int) int {
+		return a + b
+	},
 }
 
 func extractTags(name string) (string, []string) {
@@ -167,7 +179,7 @@ func build() {
 
 	wg := sync.WaitGroup{}
 	for system, games := range db {
-		buildSystem(system, games)
+		buildSystemPages(system, games)
 		system := system
 		games := games
 		wg.Add(1)

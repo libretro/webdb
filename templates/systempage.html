@@ -6,7 +6,7 @@
 <body>
   {{template "navbar"}}
   <div class="container">
-    <h1 class="py-4">{{.System}}</h1>
+    <h1 class="py-4">{{.System}} <span class="text-secondary">(Page {{.Page}})</span></h1>
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -30,12 +30,26 @@
             <p class="card-text">{{.Genre}}</p>
           </div>
           <div class="card-footer">
-            <a href="{{.Name | Clean}}.html" class="float-right stretched-link">See details</a>
+            <a href="/{{$.System}}/{{.Name | Clean}}.html" class="float-right stretched-link">See details</a>
           </div>
         </div>
       </div>
       {{end}}
     </div>
+
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item {{if eq .Page 0}}disabled{{end}}">
+          <a class="page-link" href="/{{$.System}}/index-{{add .Page -1}}.html" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">{{.Page}} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item {{if eq .Page .LastPage}}disabled{{end}}">
+          <a class="page-link" href="/{{$.System}}/index-{{add .Page 1}}.html">Next</a>
+        </li>
+      </ul>
+    </nav>
 
   </div>  
 </body>
