@@ -18,6 +18,7 @@ import (
 )
 
 var target = "build"
+var perPage = 30
 var tmpl *template.Template
 
 // Scrub characters that are not cross-platform and/or violate the
@@ -81,14 +82,13 @@ func buildHome(db rdb.DB) {
 
 func buildSystemPages(system string, games rdb.RDB) {
 	os.MkdirAll(filepath.Join(target, system), os.ModePerm)
-	numPages := int(math.Ceil(float64(len(games)) / 20.0))
+	numPages := int(math.Ceil(float64(len(games)) / float64(perPage)))
 	for p := 0; p < numPages; p++ {
 		page := fmt.Sprintf("%d", p)
 		f, err := os.OpenFile(filepath.Join(target, system, "index-"+page+".html"), os.O_CREATE|os.O_WRONLY, os.ModePerm)
 		if err != nil {
 			log.Fatal(err)
 		}
-		defer f.Close()
 
 		tmpl.ExecuteTemplate(f, "systempage.html", struct {
 			System   string
@@ -97,10 +97,12 @@ func buildSystemPages(system string, games rdb.RDB) {
 			LastPage int
 		}{
 			system,
-			games[p*20 : min(p*20+20, len(games))],
+			games[p*perPage : min(p*perPage+perPage, len(games))],
 			p,
 			numPages - 1,
 		})
+
+		f.Close()
 	}
 }
 
