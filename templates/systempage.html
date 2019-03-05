@@ -6,7 +6,7 @@
 <body>
   {{template "navbar"}}
   <div class="container">
-    <h1 class="py-4">{{.System}} <span class="text-secondary">(Page {{.Page}})</span></h1>
+    <h1 class="py-4">{{.System}} <span class="text-secondary">(Page {{add .Page 1}})</span></h1>
 
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
