@@ -29,7 +29,9 @@
             <tr><th scope="row">Release Year:</th><td>{{.Game.ReleaseYear}}</td></tr>
             <tr><th scope="row">Developer:</th><td>{{.Game.Developer}}</td></tr>
             <tr><th scope="row">Publisher:</th><td>{{.Game.Publisher}}</td></tr>
-            <tr><th scope="row">Franchise:</th><td>{{.Game.Franchise}}</td></tr>
+            {{if .Game.Franchise}}
+              <tr><th scope="row">Franchise:</th><td><a href="/franchise/{{.Game.Franchise | Clean}}.html">{{.Game.Franchise}}</a></td></tr>
+            {{end}}
             <tr><th scope="row">Serial:</th><td>{{.Game.Serial}}</td></tr>
             <tr><th scope="row">Size:</th><td>{{.Game.Size}}</td></tr>
             <tr><th scope="row">CRC32:</th><td>{{.Game.CRC32}}</td></tr>

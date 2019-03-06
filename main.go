@@ -192,7 +192,55 @@ func build() {
 			wg.Done()
 		}()
 	}
+
+	buildFranchises(db)
+
 	wg.Wait()
+}
+
+func buildFranchises(db rdb.DB) {
+	perFranchise := map[string][]rdb.Game{}
+	for system, games := range db {
+		for _, game := range games {
+			if game.Franchise == "" {
+				continue
+			}
+			game.System = system
+			perFranchise[game.Franchise] = append(perFranchise[game.Franchise], game)
+		}
+	}
+	buildFranchiseIndex(perFranchise)
+	for franchise, games := range perFranchise {
+		buildFranchisePage(franchise, games)
+	}
+}
+
+func buildFranchiseIndex(perFranchise map[string][]rdb.Game) {
+	os.MkdirAll(filepath.Join(target, "franchise"), os.ModePerm)
+	path := filepath.Join(target, "franchise", "index.html")
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+	tmpl.ExecuteTemplate(f, "franchises.html", perFranchise)
+}
+
+func buildFranchisePage(franchise string, games []rdb.Game) {
+	path := filepath.Join(target, "franchise", scrubIllegalChars(franchise)+".html")
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	tmpl.ExecuteTemplate(f, "franchise.html", struct {
+		Franchise string
+		Games     []rdb.Game
+	}{
+		franchise,
+		games,
+	})
 }
 
 func serve() {

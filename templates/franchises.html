@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <h1 class="py-4">Franchises</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Franchises</li>
+      </ol>
+    </nav>
+    <table class="table">
+      {{range $franchise, $games := .}}
+      <tr>
+        <td><a href="/franchise/{{$franchise | Clean}}.html">{{$franchise}}</a></td>
+        <td>{{len $games}} games</td>
+      </tr>
+      {{end}}
+    </table>
+  </div>
+</body>
+</html>

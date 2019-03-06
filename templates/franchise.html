@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <h1 class="py-4">{{.Franchise}}</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/franchise/index.html">Franchise</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{.Franchise}}</li>
+      </ol>
+    </nav>
+    <table class="table">
+      {{range .Games}}
+      <tr>
+        <td><a href="/{{.System}}/{{.Name | Clean}}.html">{{.Name}}</a></td>
+        <td><a href="/{{.System}}/index-0.html">{{.System}}</a></td>
+        <td>{{.ReleaseYear}}</td>
+      </tr>
+      {{end}}
+    </table>
+  </div>
+</body>
+</html>
