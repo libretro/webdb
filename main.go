@@ -223,7 +223,10 @@ func buildFranchiseIndex(perFranchise map[string][]rdb.Game) {
 		log.Fatal(err)
 	}
 	defer f.Close()
-	tmpl.ExecuteTemplate(f, "franchises.html", perFranchise)
+	err = tmpl.ExecuteTemplate(f, "franchises.html", perFranchise)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func buildFranchisePage(franchise string, games []rdb.Game) {
@@ -234,13 +237,16 @@ func buildFranchisePage(franchise string, games []rdb.Game) {
 	}
 	defer f.Close()
 
-	tmpl.ExecuteTemplate(f, "franchise.html", struct {
+	err = tmpl.ExecuteTemplate(f, "franchise.html", struct {
 		Franchise string
 		Games     []rdb.Game
 	}{
 		franchise,
 		games,
 	})
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func serve() {
