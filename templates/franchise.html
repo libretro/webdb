@@ -17,7 +17,12 @@
     <table class="table">
       {{range .Games}}
       <tr>
-        <td><a href="/{{.System}}/{{.Name | Clean}}.html">{{.Name}}</a></td>
+        <td><a href="/{{.System}}/{{.Name | Clean}}.html">
+          {{.Name | WithoutTags}}
+          {{range $_, $tag := (Tags .Name) }}
+            <span class="badge badge-secondary">{{$tag}}</span>
+          {{end}}
+        </a></td>
         <td><a href="/{{.System}}/index-0.html">{{.System}}</a></td>
         <td>{{.ReleaseYear}}</td>
       </tr>
