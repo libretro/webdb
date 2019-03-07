@@ -260,6 +260,17 @@ func serve() {
 func main() {
 	flag.Parse()
 	args := flag.Args()
+
+	// Display a help message if there is no argument.
+	if len(args) == 0 {
+		fmt.Println(`libretro-webdb
+
+Usage:
+  webdb build
+  webdb serve`)
+		return
+	}
+
 	switch args[0] {
 	case "serve":
 		serve()
