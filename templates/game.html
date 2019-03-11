@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <h1 class="py-4">
+      {{.Game.Name | WithoutTags}}
+      {{range $_, $tag := (Tags .Game.Name) }}
+        <span class="badge badge-secondary">{{$tag}}</span>
+      {{end}}
+    </h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/{{.System}}/index-0.html">{{.System}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{.Game.Name}}</li>
+      </ol>
+    </nav>
+    <div class="row">
+      <div class="col-sm">
+        <p>{{.Game.Description}}</p>
+        <table class="table table-sm table-striped">
+          <tbody>
+            {{if .Game.Genre}}
+              <tr><th scope="row" style="width: 25%">Genre:</th><td><a href="/genre/{{.Game.Genre | Clean}}.html">{{.Game.Genre}}</a></td></tr>
+            {{end}}
+            {{if .Game.ReleaseMonth}}
+              <tr><th scope="row">Release Month:</th><td>{{.Game.ReleaseMonth}}</td></tr>
+            {{end}}
+            {{if .Game.ReleaseYear}}
+              <tr><th scope="row">Release Year:</th><td>{{.Game.ReleaseYear}}</td></tr>
+            {{end}}
+            {{if .Game.Developer}}
+              <tr><th scope="row">Developer:</th><td><a href="/developer/{{.Game.Developer | Clean}}.html">{{.Game.Developer}}</a></td></tr>
+            {{end}}
+            {{if .Game.Developer}}
+              <tr><th scope="row">Publisher:</th><td><a href="/publisher/{{.Game.Publisher | Clean}}.html">{{.Game.Publisher}}</a></td></tr>
+            {{end}}
+            {{if .Game.Franchise}}
+              <tr><th scope="row">Franchise:</th><td><a href="/franchise/{{.Game.Franchise | Clean}}.html">{{.Game.Franchise}}</a></td></tr>
+            {{end}}
+            {{if .Game.Origin}}
+              <tr><th scope="row">Origin:</th><td><a href="/origin/{{.Game.Origin | Clean}}.html">{{.Game.Origin}}</a></td></tr>
+            {{end}}
+            <tr><th scope="row">Serial:</th><td>{{.Game.Serial}}</td></tr>
+            <tr><th scope="row">Size:</th><td>{{.Game.Size}}</td></tr>
+            <tr><th scope="row">CRC32:</th><td>{{.Game.CRC32}}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm">
+        <div class="row">
+          <div class="col-12 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Boxarts/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+          <div class="col-6 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Titles/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+          <div class="col-6 mb-4"><img class="w-100" src="http://thumbnails.libretro.com/{{.System}}/Named_Snaps/{{.Game.Name | Clean}}.png" onerror="this.src='/img-broken.png'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

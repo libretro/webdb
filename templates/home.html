@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <div class="row pt-5">
+      {{range $system, $games := .DB}}
+      {{if $games}}
+      <div class="col-md-6 col-sm-12">
+        <div class="jumbotron position-relative" style="background-color: #555;">
+          <h2 class="text-light pb-3">{{$system}}</h2>
+          <div class="clearfix"><a href="/{{$system}}/index-0.html" class="float-right btn btn-light stretched-link">{{len $games}} games</a></div>
+        </div>
+      </div>
+      {{end}}
+      {{end}}
+    </div>
+  </div>
+</body>
+</html>

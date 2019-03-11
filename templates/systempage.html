@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {{template "head"}}
+</head>
+<body>
+  {{template "navbar"}}
+  <div class="container">
+    <h1 class="py-4">{{.System}} <span class="text-secondary">(Page {{add .Page 1}})</span></h1>
+
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{.System}}</li>
+      </ol>
+    </nav>
+
+    <div class="row">
+      {{range .Games}}
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-3">
+        <div class="card shadow-sm">
+          <img src="http://thumbnails.libretro.com/{{$.System}}/Named_Snaps/{{.Name | Clean}}.png" class="card-img-top" alt="Game screenshot" onerror="this.src='/img-broken.png'">
+          <div class="card-body">
+            <h6 class="card-title mb-0">
+              {{.Name | WithoutTags}}
+              {{range $_, $tag := (Tags .Name) }}
+                <span class="badge badge-secondary">{{$tag}}</span>
+              {{end}}
+            </h6>
+            <p class="card-text">{{.Genre}}</p>
+          </div>
+          <div class="card-footer">
+            <a href="/{{$.System}}/{{.Name | Clean}}.html" class="float-right stretched-link">See details</a>
+          </div>
+        </div>
+      </div>
+      {{end}}
+    </div>
+
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item {{if eq .Page 0}}disabled{{end}}">
+          <a class="page-link" href="/{{$.System}}/index-{{add .Page -1}}.html" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">{{.Page}} <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="page-item {{if eq .Page .LastPage}}disabled{{end}}">
+          <a class="page-link" href="/{{$.System}}/index-{{add .Page 1}}.html">Next</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>  
+</body>
+</html>
