@@ -1,0 +1,15 @@
+{
+  "name": "webdb",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A website to browse the content of the libretro RDB files. https://github.com/libretro/webdb",
+  "scripts": {
+    "prebuild": "go build",
+    "build": "./webdb build",
+    "deploy": "gh-pages -d build"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
+}
