@@ -1,2 +1,4 @@
 build/
 webdb
+package-lock.json
+node_modules
