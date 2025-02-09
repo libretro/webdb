@@ -1,2 +1,4 @@
 build/
 webdb
+.DS_Store
+.idea/
